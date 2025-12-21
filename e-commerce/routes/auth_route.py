@@ -1,4 +1,6 @@
-from routes import auth , flash , request , redirect , render_template
+from routes import auth
+from flask import redirect ,request , flash , render_template
+
 
 @auth.route("/sign_up", methods = ["GET", "POST"])
 def sign_up():
@@ -24,7 +26,6 @@ def sign_up():
             flash("the password and password_confirmation not match!")
         return render_template("sign.html")
     
-    return redirect("successful.html")
     
 @auth.route("/login", methods = ["GET", "POST"])
 def login():

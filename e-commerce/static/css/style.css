@@ -1,0 +1,21 @@
+/* تنسيق الـ Nav العام */
+nav {
+    background-color: #333; /* لون الخلفية */
+    padding: 10px 20px;
+    display: flex;
+    gap: 15px; /* مسافة بين الروابط */
+  }
+  
+  nav a {
+    color: white; /* لون النص */
+    text-decoration: none; /* إزالة الخط تحت النص */
+    font-weight: bold;
+    padding: 5px 10px;
+    transition: background-color 0.3s, color 0.3s; /* تأثير عند المرور على الرابط */
+  }
+  
+  nav a:hover {
+    background-color: #555; /* لون الخلفية عند المرور */
+    border-radius: 5px;     /* جعل الحواف مدورة */
+  }
+
