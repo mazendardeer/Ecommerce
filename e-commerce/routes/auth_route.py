@@ -1,6 +1,6 @@
-from routes import auth
-from flask import redirect ,request , flash , render_template
+from flask import redirect ,request , flash , render_template , Blueprint
 
+auth = Blueprint("auth", __name__)
 
 @auth.route("/sign_up", methods = ["GET", "POST"])
 def sign_up():

@@ -1,12 +1,30 @@
-{%extends "base.html" %}
+{% extends "base.html" %}
 
-{%block title%}{%endblock%}
+{% block title %}Products{% endblock %}
 
-{%block content%}
- <nav>
-    <a href="sign_up.html">sign_up</a>
-    <a href="login.html">login</a>
-    <a href="cart.html">cart</a>
-    <a href="proudet.html">proudet</a>
- </nav>
-{%endblock%}
+{% block content %}
+<nav>
+   <a href="">Sign Up</a>
+   <a href="">Login</a>
+   <a href="{{url_for('cart.show_cart')}}">Cart</a>
+   <a href="">Products</a>
+   
+</nav>
+
+<div class="products">
+  {% for product in products %}
+    <div class="product">
+       <h3>{{ product.name }}</h3>
+       <p>Price: {{ product.price }}</p>
+       <p>Category: {{ product.category }}</p>
+       <p>Stock: {{ product.stock }}</p>
+       <form action="{{url_for('cart.add_cart')}}" method="post">
+        <input type="hidden" name="product_id" value={{product.id}}>
+        <input type="number" name="quantity" value="1" min="1">
+        <button type="submit">Add to Cart</button>
+       </form>
+       
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}

@@ -4,7 +4,8 @@ class Cart:
     def __init__(self, user_id):
         self.user_id = user_id
 
-    def createTable(self):
+    @staticmethod
+    def createTable():
         db = getConnection()
         cursor = db.cursor()
         try:
@@ -22,8 +23,8 @@ class Cart:
             db.commit()
             cursor.close()
             db.close()
-
-    def createCart_Item(self):
+    @staticmethod
+    def createCart_Item():
         db = getConnection()
         cursor = db.cursor()
         try:
@@ -44,10 +45,13 @@ class Cart:
             db.commit()
             cursor.close()
             db.close()
-
+    
     def cartAdd(self, product_id, quantity=1):
         db = getConnection()
         cursor = db.cursor(buffered=True)
+        Cart.createTable()
+        Cart.createCart_Item()
+        
         try:
             # تأكد من وجود المنتج
             cursor.execute("SELECT id FROM products WHERE id=%s", (product_id,))
@@ -114,3 +118,21 @@ class Cart:
             db.commit()
             cursor.close()
             db.close()
+    @staticmethod
+    def view_cart(user_id):
+        db = getConnection()
+        cursor = db.cursor(dictionary=True)
+        try :
+            cursor.execute("SELECT * FROM cart WHERE user_id=%s" , (user_id,))
+            result = cursor.fetchall()
+            if not result:
+                return []
+            return result
+    
+        except Exception as Error :
+            print(f"wrong in cart..{Error}")
+
+        finally:
+            cursor.close()
+            db.close()
+

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% if cart %}
+        <ul class="cart">
+            {% for item in cart %}
+            <li>
+                <div>
+                    <span>{{ item.name }}</span>
+                    <span class="price-qty">{{ item.price }} × {{ item.quantity }}</span>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Empty cart</p>
+    {% endif %}
+{% endblock %}
