@@ -12,21 +12,26 @@ def sign_up():
     
         if not username or not email or not password or not password_confirmation :
             flash("all field is required!")
+            return render_template("sign_up.html")
 
         if len(username)  < 3 :
             flash("the username is too short!")
+            return render_template("sign_up.html")
 
         if len(password) < 6 :
             flash("the password is too short!")
+            return render_template("sign_up.html")
 
         if "@" not in email :
             flash("invailed email")
+            return render_template("sign_up.html")
 
         if password != password_confirmation :
             flash("the password and password_confirmation not match!")
-        return render_template("sign.html")
-    
-    
+            return render_template("sign_up.html")
+
+    return render_template("sign_up.html")
+
 @auth_bp.route("/login", methods = ["GET", "POST"])
 def login():
     if request.method == "POST" :

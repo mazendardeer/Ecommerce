@@ -1,20 +1,27 @@
-from flask import render_template , Blueprint , request , redirect , url_for
+from flask import Blueprint, request, redirect, url_for, render_template, session
 from models import Cart
+import uuid
 
-cart_bp = Blueprint("cart_bp", __name__)
+cart_bp = Blueprint("cart_bp", __name__, url_prefix="/cart")
 
-@cart_bp.route("", methods=["POST"]) 
-def add_cart(): 
-    product_id = request.form.get("product_id") 
-    quantity   = request.form.get("quantity") 
-    Cart.cartAdd(product_id,quantity) 
-    return redirect(url_for("main.view_products"))
+def get_guest_id():
+    if "guest_id" not in session:
+        session["guest_id"] = str(uuid.uuid4())
+    return session["guest_id"]
 
-@cart_bp.route("/") 
-def show_cart(): 
-    user_id = 1 
-    cart = Cart.view_cart(user_id)
-    return render_template("cart.html",cart = cart)
-    
+@cart_bp.route("/", methods=["POST"])
+def add_cart():
+    product_id = request.form.get("product_id")
+    quantity   = int(request.form.get("quantity", 1))
 
+    guest_id = get_guest_id()
+    cart = Cart(guest_id)
+    cart.cartAdd(product_id, quantity)
 
+    return redirect(url_for("main_bp.view_products"))
+
+@cart_bp.route("/")
+def show_cart():
+    guest_id = get_guest_id()
+    cart_items = Cart.view_cart(guest_id)
+    return render_template("cart.html", cart=cart_items)

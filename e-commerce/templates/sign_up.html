@@ -1,12 +1,16 @@
-{%extends "base.html"%}
+{% extends "base.html" %}
 
-{%block content}
+{% block title %} Register {% endblock %}
+
+{% block content %}
  <form action="register">
-    <input type="text" name="username" autofocus required>
-    <input type= "email" name=" email" autofocus required>
-    <input type= "password" name="password" autofocus required>
-    <input type="password" name="password_confirmaion " autofocus required>
+    <h2>Creat New Accaunt</h2>
+    <p>Fill in the Fields below the register </p>
+    <input type="text" name="username" placeholder="username" autofocus required>
+    <input type= "email" name=" email" placeholder="email" autofocus required>
+    <input type= "password" name="password" placeholder="password" autofocus required>
+    <input type="password" name="password_confirmaion " placeholder="password confirmation" autofocus required>
     <button type="submit">submit</button>
  </form>
 
-{%endblock%}
+{% endblock %}
