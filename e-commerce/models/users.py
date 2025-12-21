@@ -42,13 +42,16 @@ def register(user):
 
     try:
         cursor.execute("SELECT id FROM users WHERE email=%s",(user.email,))
-        result = cursor.fetchone()
+        result = cursor.fetchall()
         if result == None :
             cursor.execute = ("INSERT INTO users( name , email, password_hash) VALUES( %s , %s , %s )",(user.name,user.email,user.password_hash,))
+            user_id = cursor.lastrowid
             print("the data insert in the table correctly..") 
+            return user_id
 
         else:
             print('the user is already in the system...')
+            return result[0]
 
     except Exception as Error :
         print(f"wrong in data insertion : {Error}")

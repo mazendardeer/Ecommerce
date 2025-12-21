@@ -1,6 +1,5 @@
 from flask import Flask, render_template
-from models.cart import Cart
-from models.users import User, usersTable, register
+from models import *
 
 app = Flask(__name__)
 

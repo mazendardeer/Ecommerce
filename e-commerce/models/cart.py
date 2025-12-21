@@ -58,10 +58,10 @@ class Cart():
             else :
                 cart_id = cart[0]
 
-            cursor.execute("SELECT id , quantity FROM cart_item WHERE cart_id=%s AND product_id=%s",(cart_id,product_id,))
-            cart_item = cursor.fetchone()
+            cursor.execute("SELECT id , quantity FROM cart_item WHERE cart_id=%s AND product_id=%s",(cart_id,product_id))
+            cart_item = cursor.fetchall()
             if cart_item == None :
-                cursor.execute( "INSERT INTO cart_item (cart_id, product_id, quantity) VALUES (%s, %s, %s)",(cart_id, product_id, quantity,))
+                cursor.execute( "INSERT INTO cart_item (cart_id, product_id, quantity) VALUES (%s, %s, %s)",(cart_id, product_id, quantity))
 
             else :
                 new_quantity = cart_item[1] + quantity
@@ -80,7 +80,7 @@ class Cart():
         cursor = db.cursor()
         try:
             cursor.execute("SELECT id  , quantity  FROM cart_item WHERE cart_id=%s AND product_id=%s",(cart_id,product_id,))
-            item = cursor.fetchone()
+            item = cursor.fetchall()
             if item != None :
                 cursor.execute("DELETE FROM cart_item WHERE cart_id=%s AND product_id=%s",(cart_id,product_id,))
 
