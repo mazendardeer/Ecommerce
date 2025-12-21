@@ -1,8 +1,8 @@
 from flask import redirect ,request , flash , render_template , Blueprint
 
-auth = Blueprint("auth", __name__)
+auth_bp = Blueprint("auth_bp", __name__)
 
-@auth.route("/sign_up", methods = ["GET", "POST"])
+@auth_bp.route("/sign_up", methods = ["GET", "POST"])
 def sign_up():
     if request.method == "POST":
         username = request.form.get("username")
@@ -27,7 +27,7 @@ def sign_up():
         return render_template("sign.html")
     
     
-@auth.route("/login", methods = ["GET", "POST"])
+@auth_bp.route("/login", methods = ["GET", "POST"])
 def login():
     if request.method == "POST" :
         email    = request.form.get("email")
