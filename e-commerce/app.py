@@ -1,6 +1,6 @@
 from flask import Flask, render_template
 from models.cart import Cart
-from models.users import User, usersTable, usersInsertion
+from models.users import User, usersTable, register
 
 app = Flask(__name__)
 
@@ -13,7 +13,7 @@ usersTable()
 
 # 2️⃣ إضافة المستخدم
 user = User(id=None, name="Mazen", email="mazen@example.com", password="123456")
-user_id = usersInsertion(user)  # ترجع ID الفعلي
+user_id =register(user)  # ترجع ID الفعلي
 
 # 3️⃣ إنشاء كارت للمستخدم
 cart = Cart(user_id=user_id)

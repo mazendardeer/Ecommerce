@@ -41,11 +41,10 @@ def register(user):
     cursor = db.cursor()
 
     try:
-        cursor.execute("SELECT id FROM users WHERE email=%s"(user.email))
+        cursor.execute("SELECT id FROM users WHERE email=%s",(user.email,))
         result = cursor.fetchone()
-        if result != None :
-            sql = "INSERT INTO users( name , email, password_hash) VALUES( %s , %s , %s ) "
-            cursor.execute(sql,(user.name,user.email,user.password_hash))
+        if result == None :
+            cursor.execute = ("INSERT INTO users( name , email, password_hash) VALUES( %s , %s , %s )",(user.name,user.email,user.password_hash,))
             print("the data insert in the table correctly..") 
 
         else:

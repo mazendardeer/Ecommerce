@@ -58,10 +58,10 @@ class Cart():
             else :
                 cart_id = cart[0]
 
-            cursor.execute("SELECT id , quantity FROM cart_item WHERE cart_id=%s AND product_id=%s",(cart_id,product_id))
+            cursor.execute("SELECT id , quantity FROM cart_item WHERE cart_id=%s AND product_id=%s",(cart_id,product_id,))
             cart_item = cursor.fetchone()
             if cart_item == None :
-                cursor.execute( "INSERT INTO cart_item (cart_id, product_id, quantity) VALUES (%s, %s, %s)",(cart_id, product_id, quantity))
+                cursor.execute( "INSERT INTO cart_item (cart_id, product_id, quantity) VALUES (%s, %s, %s)",(cart_id, product_id, quantity,))
 
             else :
                 new_quantity = cart_item[1] + quantity
@@ -75,16 +75,22 @@ class Cart():
             cursor.close()
             db.close()
 
-    def cartRemove(self,card_id,product_id):
+    def cartRemove(self,cart_id,product_id):
         db = getConnection()
         cursor = db.cursor()
         try:
-            cursor.execute("SELECT id  , quantity  FROM card_item WHERE cart_id=%s AND product_id=%s",(card_id,product_id))
+            cursor.execute("SELECT id  , quantity  FROM cart_item WHERE cart_id=%s AND product_id=%s",(cart_id,product_id,))
             item = cursor.fetchone()
-            if item == None :
-                print("the product not in the cart")
+            if item != None :
+                cursor.execute("DELETE FROM cart_item WHERE cart_id=%s AND product_id=%s",(cart_id,product_id,))
 
-           # else:
-                #cursor.execute("DELET ")
-        except:
-            pass
+            else:
+                print("the proudect not in the cart..")
+        except Exception as Error:
+            print(f"Wrong in the remove..{Error}")
+
+        finally:
+            db.commit()
+            cursor.close()
+            db.close()
+            
