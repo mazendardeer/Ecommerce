@@ -38,13 +38,13 @@ def usersTable():
 
 def register(user):
     db = getConnection()
-    cursor = db.cursor()
+    cursor = db.cursor(buffered=True)
 
     try:
         cursor.execute("SELECT id FROM users WHERE email=%s",(user.email,))
-        result = cursor.fetchall()
+        result = cursor.fetchone()
         if result == None :
-            cursor.execute = ("INSERT INTO users( name , email, password_hash) VALUES( %s , %s , %s )",(user.name,user.email,user.password_hash,))
+            cursor.execute = ("INSERT INTO users( name , email, password_hash) VALUES( %s , %s , %s )",(user.name,user.email,user.password_hash))
             user_id = cursor.lastrowid
             print("the data insert in the table correctly..") 
             return user_id

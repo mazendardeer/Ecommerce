@@ -41,6 +41,8 @@ def productInsertion(product):
         sql = "INSERT INTO products(name,price,category,stock) VALUES(%s,%s,%s,%s)"
         cursor.execute(sql,(product.name,product.price,product.category,product.stock))
         print("the product insertion is done..")
+        product.id = cursor.lastrowid
+        return product.id
 
     except Exception as Error :
         print("wrong in data insertion..")

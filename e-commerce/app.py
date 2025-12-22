@@ -17,7 +17,7 @@ user_id =register(user)  # ترجع ID الفعلي
 # 3️⃣ إنشاء كارت للمستخدم
 cart = Cart(user_id=user_id)
 cart.createTable()
-cart.createCard_item()
+cart.createCart_Item()
 
 # 4️⃣ إضافة 10 منتجات مختلفة
 cart.cartAdd(product_id=1, quantity=2)
