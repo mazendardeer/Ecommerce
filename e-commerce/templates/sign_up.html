@@ -2,6 +2,11 @@
 
 {% block title %} Register {% endblock %}
 
+{% block css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/sign_up.css') }}">
+{% endblock %}
+
+
 {% block content %}
  <form action="register">
     <h2>Creat New Accaunt</h2>

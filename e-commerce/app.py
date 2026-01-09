@@ -1,7 +1,8 @@
 from flask import Flask
 from routes import auth_bp
 from routes import cart_bp
-from routes import main_bp
+from routes import products_bp
+from routes import home_bp
 
 from db import getConnection
 
@@ -11,7 +12,8 @@ app.secret_key = "secret_key_123"
 
 app.register_blueprint(auth_bp)
 app.register_blueprint(cart_bp)
-app.register_blueprint(main_bp)
+app.register_blueprint(products_bp)
+app.register_blueprint(home_bp)
 
 
 if __name__ == "__main__":

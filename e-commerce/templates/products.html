@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Products{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/products.css') }}">
+{% endblock %}
+
+
+{% block content %}
+
+<div class="products">
+  {% for product in products %}
+    <div class="product">
+       <h3>{{ product.name }}</h3>
+       <p>Price: {{ product.price }}$</p>
+       <p>Category: {{ product.category }}</p>
+       <p>Stock: {{ product.stock }}</p>
+       <form action="{{url_for('cart_bp.add_cart')}}" method="post">
+        <input type="hidden" name="product_id" value="{{product.id}}">
+        <input type="number" name="quantity" value="1" min="1">
+        <button type="submit">Add to Cart</button>
+       </form>
+       
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}

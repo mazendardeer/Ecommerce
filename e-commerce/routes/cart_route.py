@@ -17,7 +17,7 @@ def add_cart():
     guest_id = get_guest_id()
     cart = Cart(guest_id)
     cart.cartAdd(product_id, quantity)
-    return redirect(url_for("main_bp.view_products"))
+    return redirect(url_for("products.view_products"))
 
 @cart_bp.route("/cart")
 def show_cart():

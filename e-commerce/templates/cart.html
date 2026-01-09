@@ -1,24 +1,33 @@
 {% extends "base.html" %}
 
-{% block title %} Cart {% endblock %}
+{% block title %}Cart{% endblock %}
+
+{% block css %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/cart.css') }}">
+{% endblock %}
 
 {% block content %}
-    {% if cart %}
-        <ul class="cart">
-            {% for item in cart %}
-            <li>
-                <div>
-                    <span>{{ item.name }}</span>
-                    <span class="price-qty">{{ item.price }} × {{ item.quantity }}</span>
-                </div>
-                    <form action="{{url_for('cart_bp.remove_cart')}}" method="POST">
-                    <input type="hidden" name="product_id" value="{{ item.id }}">
-                    <button type="submit"> Delete </button>
-                </form>
-            </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>Empty Cart</p>
-    {% endif %}
+
+{% if cart %}
+    <ul class="cart">
+        {% set total = 0 %}
+        {% for item in cart %}
+        <li>
+            <div>
+                <span>{{ item.name }}</span>
+                <span>{{ item.price }} × {{ item.quantity }}</span>
+            </div>
+            <form action="{{ url_for('cart_bp.remove_cart') }}" method="POST">
+                <input type="hidden" name="product_id" value="{{ item.id }}">
+                <button type="submit">Delete</button>
+            </form>
+        </li>
+        {% set total = total + (item.price * item.quantity) %}
+        {% endfor %}
+    </ul>
+    <p>Total: {{ total }}</p>
+{% else %}
+    <p>Empty Cart</p>
+{% endif %}
+
 {% endblock %}
