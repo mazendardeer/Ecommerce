@@ -4,7 +4,6 @@ class Cart:
     def __init__(self, guest_id):
         self.guest_id = guest_id
 
-    # إنشاء جدول cart
     @staticmethod
     def createTable():
         db = getConnection()
@@ -19,7 +18,6 @@ class Cart:
         cursor.close()
         db.close()
 
-    # إنشاء جدول cart_item
     @staticmethod
     def createCart_Item():
         db = getConnection()
@@ -38,7 +36,6 @@ class Cart:
         cursor.close()
         db.close()
 
-    # إضافة منتج للكارت
     def cartAdd(self, product_id, quantity=1):
         db = getConnection()
         cursor = db.cursor(buffered=True)
@@ -47,12 +44,10 @@ class Cart:
         Cart.createCart_Item()
 
         try:
-            # التحقق من وجود المنتج
             cursor.execute("SELECT id FROM products WHERE id=%s", (product_id,))
             if cursor.fetchone() is None:
                 return
 
-            # الحصول على cart الخاص بالـ Guest
             cursor.execute("SELECT id FROM cart WHERE guest_id=%s", (self.guest_id,))
             cart = cursor.fetchone()
             if cart is None:
@@ -61,7 +56,6 @@ class Cart:
             else:
                 cart_id = cart[0]
 
-            # التحقق من المنتج داخل cart_item
             cursor.execute("""
                 SELECT id, quantity FROM cart_item
                 WHERE cart_id=%s AND product_id=%s
@@ -86,22 +80,56 @@ class Cart:
             cursor.close()
             db.close()
 
-    # عرض محتويات الكارت
     @staticmethod
     def view_cart(guest_id):
         db = getConnection()
         cursor = db.cursor(buffered=True, dictionary=True)
 
-        cursor.execute("""
-            SELECT 
-                p.id, p.name, p.price, ci.quantity
-            FROM cart c
-            JOIN cart_item ci ON c.id = ci.cart_id
-            JOIN products p ON p.id = ci.product_id
-            WHERE c.guest_id=%s
-        """, (guest_id,))
+        try:
 
-        result = cursor.fetchall()
-        cursor.close()
-        db.close()
-        return result
+            cursor.execute("""
+                SELECT 
+                    p.id, p.name, p.price, ci.quantity
+                FROM cart c
+                JOIN cart_item ci ON c.id = ci.cart_id
+                JOIN products p ON p.id = ci.product_id
+                WHERE c.guest_id=%s
+            """, (guest_id,))
+
+            result = cursor.fetchall()
+
+        except Exception as Error :
+            print(f"wrong in data view : {Error}")
+
+        finally:
+            cursor.close()
+            db.close()
+            return result
+    @staticmethod
+    def delet_cart(product_id,guest_id):
+        db = getConnection()
+        cursor = db.cursor(buffered=True)
+
+        try :
+            cursor.execute("SELECT id FROM cart WHERE guest_id=%s",(guest_id,))
+            cart = cursor.fetchone()
+            cart_id = cart[0]
+
+            cursor.execute("SELECT quantity FROM cart_item WHERE cart_id=%s AND product_id=%s",(cart_id,product_id))
+            item = cursor.fetchone()
+            quantity = item[0]
+            if quantity > 1 :
+                cursor.execute("UPDATE cart_item SET quantity = quantity - 1 WHERE cart_id=%s AND product_id=%s",(cart_id,product_id))
+
+            else :
+                cursor.execute("DELETE FROM cart_item  WHERE cart_id=%s AND product_id=%s",(cart_id,product_id))
+            db.commit()
+
+        except Exception as Error :
+            print(f"wrong in delet product : {Error}")
+
+        finally : 
+            cursor.close()
+            db.close()
+
+

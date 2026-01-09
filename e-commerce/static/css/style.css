@@ -117,7 +117,8 @@ li div {
 /* ======= Empty cart message ======= */
 p {
     font-size: 18px;
-    color: #7f8c8d;
+    font-weight: 900;
+    color: black;
     text-align: center;
     margin-top: 20px;
 }
@@ -204,4 +205,44 @@ form button:hover {
     background-color: #f8d7da;
     color: #721c24;
     border: 1px solid #f5c6cb;
+}
+/* ======= Cart Delete Button ======= */
+
+/* نلغي شكل الفورم الكبير داخل الكارت */
+ul li form {
+    margin: 0;
+    padding: 0;
+    background: none;
+    box-shadow: none;
+    max-width: unset;
+}
+
+/* زر الحذف */
+ul li form button {
+    width: auto;
+    padding: 6px 14px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 6px;
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+/* Hover */
+ul li form button:hover {
+    background-color: #c0392b;
+    transform: scale(1.05);
+}
+
+/* Click */
+ul li form button:active {
+    transform: scale(0.95);
+}
+
+/* أيقونة */
+ul li form button::before {
+    content: "🗑 ";
 }

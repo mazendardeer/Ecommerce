@@ -4,12 +4,25 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}main Page{% endblock %}</title>
-    <link rel="stylesheet" href="{{url_for('static',filename= 'css/style.css') }}">
-    {% block css %}{% endblock %}
 
+    <title>{% block title %}Main Page{% endblock %}</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    {% block css %}{% endblock %}
 </head>
+
 <body>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="{{ url_for('auth_bp.sign_up') }}">Sign Up</a>
+        <a href="{{ url_for('auth_bp.login') }}">Login</a>
+        <a href="{{ url_for('cart_bp.show_cart') }}">Cart</a>
+        
+    </nav>
+
+    <!-- Page Content -->
     {% block content %}{% endblock %}
+
 </body>
 </html>

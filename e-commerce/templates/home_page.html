@@ -3,19 +3,12 @@
 {% block title %}Home Page{% endblock %}
 
 {% block content %}
-<nav>
-   <a href="{{url_for('auth_bp.sign_up')}}">Sign Up</a>
-   <a href="{{url_for('auth_bp.login')}}">Login</a>
-   <a href="{{ url_for('cart_bp.show_cart') }}">Cart</a>
-   <a href="">Products</a>
-   
-</nav>
 
 <div class="products">
   {% for product in products %}
     <div class="product">
        <h3>{{ product.name }}</h3>
-       <p>Price: {{ product.price }}</p>
+       <p>Price: {{ product.price }}$</p>
        <p>Category: {{ product.category }}</p>
        <p>Stock: {{ product.stock }}</p>
        <form action="{{url_for('cart_bp.add_cart')}}" method="post">

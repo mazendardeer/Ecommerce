@@ -11,10 +11,14 @@
                     <span>{{ item.name }}</span>
                     <span class="price-qty">{{ item.price }} × {{ item.quantity }}</span>
                 </div>
+                    <form action="{{url_for('cart_bp.remove_cart')}}" method="POST">
+                    <input type="hidden" name="product_id" value="{{ item.id }}">
+                    <button type="submit"> Delete </button>
+                </form>
             </li>
             {% endfor %}
         </ul>
     {% else %}
-        <p>Empty cart</p>
+        <p>Empty Cart</p>
     {% endif %}
 {% endblock %}
